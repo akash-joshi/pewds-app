@@ -4,6 +4,18 @@ import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 import TestScreen from './screens/Test.js'
 
+const getActiveRouteName = (navigationState) => {
+  if (!navigationState) {
+    return null;
+  }
+  const route = navigationState.routes[navigationState.index];
+  // dive into nested navigators
+  if (route.routes) {
+    return getActiveRouteName(route);
+  }
+  return route.routeName;
+} 
+
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,
